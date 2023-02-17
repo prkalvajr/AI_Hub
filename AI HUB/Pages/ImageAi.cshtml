@@ -1,0 +1,13 @@
+﻿@page
+@model ImageAiModel
+@{
+    ViewData["Title"] = "Nova Imagem";
+}
+
+
+<form method="post">
+    <input type="text" name="inputPrompt" id="inputPrompt" />
+    <button type="submit" class="btn btn-primary" >GerarImagem</button>
+</form>
+
+<img src="@Url.Action("GerarImagem", new { base64String = "..." })" alt="Imagem" hidden>
