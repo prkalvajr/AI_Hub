@@ -18,7 +18,7 @@ namespace AI_HUB.Controllers
             _config = config;
         }
 
-        [HttpPost]
+        [HttpPost("GerarImagem")]
         public IActionResult GerarImagem(string inputPrompt)
         {
             if (string.IsNullOrEmpty(inputPrompt))
@@ -36,7 +36,9 @@ namespace AI_HUB.Controllers
                 byte[] imageBytes = Convert.FromBase64String(b64.ToString());
                 MemoryStream stream = new MemoryStream(imageBytes);
                 string mimeType = "image/png"; // substitua pelo tipo MIME apropriado da imagem
-                return File(stream, mimeType);
+                //return File(stream, mimeType);
+                ViewBag.ImageBase64 = b64.ToString();
+                return View("ImageAi");
             }
         }
     }

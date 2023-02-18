@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AI_HUB.Pages
+namespace AI_HUB.Views
 {
     public class ImageAiModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace AI_HUB.Pages
 
         public IActionResult OnPost(string inputPrompt)
         {
-             return new Controllers.ImageAiController(_configuration).GerarImagem(inputPrompt);
+            return new Controllers.ImageAiController(_configuration).GerarImagem(inputPrompt);
         }
     }
 }

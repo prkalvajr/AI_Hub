@@ -17,10 +17,11 @@ namespace API.OpenAI
         {
             _config = config;
 
-            if (client == null) { 
-                client.BaseAddress = new Uri(baseUrl);  
+            if (client != null) { 
+                client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["openAiApiKey"]);
             }
+            
         }
 
         public string Get(string url)
