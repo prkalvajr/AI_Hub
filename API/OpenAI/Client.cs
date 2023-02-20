@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace API.OpenAI
 {
@@ -16,12 +17,8 @@ namespace API.OpenAI
         public Client(string baseUrl, IConfiguration config) 
         {
             _config = config;
-
-            if (client != null) { 
-                client.BaseAddress = new Uri(baseUrl);
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["openAiApiKey"]);
-            }
-            
+            client.BaseAddress = new Uri(baseUrl);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["openAiApiKey"]);
         }
 
         public string Get(string url)
@@ -34,17 +31,10 @@ namespace API.OpenAI
 
         public string Post(string url, Image model)
         {
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri(url),
-                Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, MediaTypeNames.Application.Json /* or "application/json" in older versions */),
-            };
-
-            var response = client.SendAsync(request).Result;
+            var content = new StringContent(JsonSerializer.Serialize(model));
+            var response = client.PostAsync(url, content).Result;
             response.EnsureSuccessStatusCode();
             return response.Content.ReadAsStringAsync().Result;
         }
-
     }  
 }
