@@ -1,9 +1,0 @@
-﻿@using AI_HUB.Views;
-@model ImageAiModel
-
-<form method="post">
-    <input type="text" name="inputPrompt" id="inputPrompt" />
-    <button type="submit" class="btn btn-primary">GerarImagem</button>
-</form>
-
-<img src="data:image/jpg;base64,@ViewBag.ImageBase64" alt="Imagem">
