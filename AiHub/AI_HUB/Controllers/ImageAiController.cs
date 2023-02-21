@@ -13,7 +13,7 @@ namespace AI_HUB.Controllers
             _config = config;
         }
 
-        public IActionResult ImageAi ()
+        public IActionResult ImageAi()
         {
             return View();
         }
@@ -36,10 +36,10 @@ namespace AI_HUB.Controllers
             }
         }
 
-        public IActionResult Download (string b64, long imageId)
+        public IActionResult Download(string b64)
         {
-            byte[] bytes = Convert.FromBase64String(b64);
-            string nomeArquivo = "ImageAi_" + imageId + ".png";
+            byte[] bytes = Convert.FromBase64String(ViewBag.ImageBase64);
+            string nomeArquivo = "ImageAi_" + ViewBag.ImageId + ".png";
             return File(bytes, "image/png", nomeArquivo);
         }
 
