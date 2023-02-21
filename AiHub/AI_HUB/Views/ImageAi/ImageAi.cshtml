@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "ImageAi";
+}
+
+<form asp-action="GerarImagem" asp-controller="ImageAi" method="post">
+    <input type="text" name="inputPrompt" id="inputPrompt"  />
+    <button type="submit" class="btn btn-primary">Gerar Imagem</button>
+</form>
+
+<br /> 
+
+@if (!string.IsNullOrEmpty(ViewBag.ImageBase64))
+{
+    <a href="@Url.Action("Download", new { b64 = ViewBag.ImageBase64, imageId = ViewBag.ImageId })">Baixar imagem</a>
+    <img src="data:image/jpg;base64,@ViewBag.ImageBase64" alt="Imagem">
+}
