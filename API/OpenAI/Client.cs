@@ -17,7 +17,10 @@ namespace API.OpenAI
         public Client(string baseUrl, IConfiguration config) 
         {
             _config = config;
-            client.BaseAddress = new Uri(baseUrl);
+
+            if (client == null)
+                client.BaseAddress = new Uri(baseUrl);
+
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["openAiApiKey"]);
         }
 
@@ -31,8 +34,14 @@ namespace API.OpenAI
 
         public string Post(string url, Image model)
         {
-            var content = new StringContent(JsonSerializer.Serialize(model));
-            var response = client.PostAsync(url, content).Result;
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri(url),
+                Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, MediaTypeNames.Application.Json /* or "application/json" in older versions */),
+            };
+
+            var response = client.SendAsync(request).Result;
             response.EnsureSuccessStatusCode();
             return response.Content.ReadAsStringAsync().Result;
         }
