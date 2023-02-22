@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics.Eventing.Reader;
 
 namespace AI_HUB.Controllers
 {
@@ -27,26 +28,26 @@ namespace AI_HUB.Controllers
             else
             {
                 var objApi = new API.OpenAI.ImageAPI(_config);
-                string jsonRetorno = objApi.GenerateImage(inputPrompt);
+                string jsonRetorno = objApi.GenerateImages(inputPrompt);
+                var lstImagens = new List<Models.ImageAi.Image>();
 
+                var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonRetorno);
                 JObject json = JObject.Parse(jsonRetorno);
-                ViewBag.ImageId = json["created"];
-                ViewBag.ImageBase64 = json["data"][0]["b64_json"].ToString();
-                return View("ImageAi");
+
+                foreach (var item in jsonObject.data) 
+                { 
+                    lstImagens.Add( new Models.ImageAi.Image() { b64_json = item.b64_json.ToString(), created = (long)json["created"] });
+                }
+
+                ViewBag.ImagesId = json["created"].ToString();
+                return View("ImageAi", lstImagens);
             }
         }
 
-        public IActionResult Download(string b64)
+        public IActionResult GerarVariacao(long id)
         {
-            byte[] bytes = Convert.FromBase64String(ViewBag.ImageBase64);
-            string nomeArquivo = "ImageAi_" + ViewBag.ImageId + ".png";
-            return File(bytes, "image/png", nomeArquivo);
+            return View("ImageAi");
         }
-
-        // byte[] imageBytes = Convert.FromBase64String(b64.ToString());
-        // MemoryStream stream = new MemoryStream(imageBytes);
-        // string mimeType = "image/png"; // substitua pelo tipo MIME apropriado da imagem
-        //return File(stream, mimeType);
     }
 }
     

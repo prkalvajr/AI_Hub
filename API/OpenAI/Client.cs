@@ -32,7 +32,7 @@ namespace API.OpenAI
             return responseBody;
         }
 
-        public string Post(string url, Image model)
+        public string Post(string url, ImageAPIModel model)
         {
             var request = new HttpRequestMessage
             {

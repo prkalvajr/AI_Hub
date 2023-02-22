@@ -1,7 +1,7 @@
 ﻿namespace API.OpenAI
 {
     // https://platform.openai.com/docs/api-reference/images/create
-    public class Image
+    public class ImageAPIModel
     {
         public string prompt { get; set; }
         public int n { get; set; }

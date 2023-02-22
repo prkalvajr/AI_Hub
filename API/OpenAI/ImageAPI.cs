@@ -20,10 +20,15 @@ namespace API.OpenAI
             return client.Get(modelsUrl);
         }
 
-        public string GenerateImage(string prompt)
+        public string GenerateImages(string prompt)
         {
-            var response = client.Post(imagesUrl, new Image { prompt = prompt, n = 1, size = "1024x1024", response_format = "b64_json" });
+            var response = client.Post(imagesUrl, new ImageAPIModel { prompt = prompt, n = 4, size = "512x512", response_format = "b64_json" });
             return response;
+        }
+
+        public string GenerateVariation()
+        {
+            return "";
         }
 
     }

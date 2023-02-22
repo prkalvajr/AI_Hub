@@ -20,10 +20,12 @@ namespace Test.OpenAI
         public void TestGenerateImage()
         {
             var api = new API.OpenAI.ImageAPI(new Config().getConfig());
-            API.OpenAI.Image model = new API.OpenAI.Image();
-            var response = api.GenerateImage("a cat with glasses drinking milk");
+            API.OpenAI.ImageAPIModel model = new API.OpenAI.ImageAPIModel();
+            var response = api.GenerateImages("a cat with glasses drinking milk");
 
-            // var response = image.g
+            // TODO Terminar teste
         }
+
+        // TODO testar gerar variação.
     }
 }
