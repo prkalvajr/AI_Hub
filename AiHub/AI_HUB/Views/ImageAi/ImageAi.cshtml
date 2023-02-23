@@ -2,6 +2,17 @@
     ViewData["Title"] = "ImageAi";
 }
 
+<style type="text/css">
+    .imagem {
+        border: 1px solid #ccc; /* Adiciona uma borda de 1 pixel sólida com cor cinza claro */
+        transition: all 0.2s ease-in-out; /* Adiciona transição suave de 0.2 segundos */
+    }
+        .imagem:hover {
+            border-color: #f00; /* Muda a cor da borda para vermelho quando o mouse passa por cima */
+            transform: scale(1.1); /* Aumenta levemente o tamanho da imagem em 10% */
+        }
+</style>
+
 <script type="text/javascript">
 
     function Download(b64, id) {
@@ -41,7 +52,7 @@
 
     @foreach (var imagem in Model)
     {
-        <img src="data:image;base64,@(imagem.b64_json)" alt="Imagem" />
+        <img src="data:image;base64,@(imagem.b64_json)" alt="Imagem" class="imagem" />
 
         <a href="#" onclick="Download('@(imagem.b64_json)', '@(imagem.created)')">
             <img src="~/icons/cloud-arrow-down.svg" alt="Download" title="Download" />
