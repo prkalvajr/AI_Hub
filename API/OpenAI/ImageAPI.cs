@@ -22,7 +22,7 @@ namespace API.OpenAI
 
         public string GenerateImages(string prompt)
         {
-            var response = client.Post(imagesUrl, new ImageAPIModel { prompt = prompt, n = 4, size = "512x512", response_format = "b64_json" });
+            var response = client.Post(imagesUrl, new ImageAPIModel { prompt = prompt, n = 6, size = "512x512", response_format = "b64_json" });
             return response;
         }
 

@@ -4,37 +4,47 @@
 
 <style type="text/css">
     .imagem {
-        border: 1px solid #ccc; /* Adiciona uma borda de 1 pixel sólida com cor cinza claro */
-        transition: all 0.2s ease-in-out; /* Adiciona transição suave de 0.2 segundos */
+        border: 1px solid #ccc;
+        transition: all 0.2s ease-in-out;
     }
+
         .imagem:hover {
-            border-color: #f00; /* Muda a cor da borda para vermelho quando o mouse passa por cima */
-            transform: scale(1.1); /* Aumenta levemente o tamanho da imagem em 10% */
+            border-color: #f98;
+            transform: scale(1.1);  /* Aumenta com hover*/
+        }
+
+    .lista-imagens {
+        list-style: none; /* Remove os marcadores da lista */
+        display: flex; /* Transforma a lista em um container flexível */
+        flex-wrap: wrap; /* Define que as imagens podem quebrar em outra linha se necessário */
+        justify-content: space-between; /* Adiciona espaço entre as imagens */
+    }
+
+        .lista-imagens li {
+            margin-bottom: 20px; /* Adiciona uma margem inferior de 20 pixels para cada item da lista */
+        }
+
+        .lista-imagens img {
+            width: 100%; /* Faz as imagens ocuparem todo o espaço disponível na largura do container */
+            height: auto; /* Mantém a proporção da imagem */
+            object-fit: cover; /* Redimensiona a imagem para cobrir todo o espaço disponível sem distorcer */
         }
 </style>
 
 <script type="text/javascript">
 
     function Download(b64, id) {
-        // Crie um elemento "a" para o link de download
         var link = document.createElement("a");
-        // Converta a string Base64 em um array de bytes
         var bytes = atob(b64);
-        // Crie um array de bytes vazio para a imagem
         var imageBytes = new Array(bytes.length);
 
-        // Copie os bytes da string para o array de bytes
         for (var i = 0; i < bytes.length; i++) {
             imageBytes[i] = bytes.charCodeAt(i);
         }
 
-        // Crie um blob com os bytes da imagem
         var blob = new Blob([new Uint8Array(imageBytes)], { type: "image/jpeg" });
-        // Defina o nome do arquivo a ser baixado
         link.download = "imagem_" + id + ".jpg";
-        // Defina a URL do arquivo (criada a partir do blob)
         link.href = URL.createObjectURL(blob);
-        // Clique no link para iniciar o download
         link.click();
     }
 
@@ -48,14 +58,18 @@
 @if (!string.IsNullOrEmpty(ViewBag.ImagesId))
 {
     <br />
-    @model List<AI_HUB.Models.ImageAi.Image>
+    <ul class="lista-imagens">
+        @model List<AI_HUB.Models.ImageAi.Image>
+        @foreach (var imagem in Model)
+        {
+            <li>
+                <img src="data:image;base64,@(imagem.b64_json)" alt="Imagem" class="imagem" />
 
-    @foreach (var imagem in Model)
-    {
-        <img src="data:image;base64,@(imagem.b64_json)" alt="Imagem" class="imagem" />
-
-        <a href="#" onclick="Download('@(imagem.b64_json)', '@(imagem.created)')">
-            <img src="~/icons/cloud-arrow-down.svg" alt="Download" title="Download" />
-        </a>
-    }
+                /* Utilizar na outra View após escolher uma das imagens. */
+                <a href="#" onclick="Download('@(imagem.b64_json)', '@(imagem.created)')">
+                    <img src="~/icons/cloud-arrow-down.svg" alt="Download" title="Download" />
+                </a>
+            </li>          
+        }
+    </ul>
 }
