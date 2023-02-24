@@ -36,7 +36,7 @@ namespace AI_HUB.Controllers
 
                 foreach (var item in jsonObject.data) 
                 { 
-                    lstImagens.Add( new Models.ImageAi.Image() { b64_json = item.b64_json.ToString(), created = (long)json["created"] });
+                    lstImagens.Add( new Models.ImageAi.Image() { url = item.url.ToString(), created = (long)json["created"] });
                 }
 
                 ViewBag.ImagesId = json["created"].ToString();
@@ -44,9 +44,10 @@ namespace AI_HUB.Controllers
             }
         }
 
-        public IActionResult GerarVariacao(long id)
+        public IActionResult Variation(string imagem)
         {
-            return View("ImageAi");
+            ViewBag.Imagem = imagem;
+            return View("Variation");
         }
     }
 }

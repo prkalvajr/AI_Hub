@@ -3,6 +3,7 @@
 }
 
 <style type="text/css">
+
     .imagem {
         border: 1px solid #ccc;
         transition: all 0.2s ease-in-out;
@@ -29,6 +30,7 @@
             height: auto; /* Mantém a proporção da imagem */
             object-fit: cover; /* Redimensiona a imagem para cobrir todo o espaço disponível sem distorcer */
         }
+
 </style>
 
 <script type="text/javascript">
@@ -63,11 +65,8 @@
         @foreach (var imagem in Model)
         {
             <li>
-                <img src="data:image;base64,@(imagem.b64_json)" alt="Imagem" class="imagem" />
-
-                /* Utilizar na outra View após escolher uma das imagens. */
-                <a href="#" onclick="Download('@(imagem.b64_json)', '@(imagem.created)')">
-                    <img src="~/icons/cloud-arrow-down.svg" alt="Download" title="Download" />
+                <a href="@Url.Action("Variation", "ImageAi", new { imagem = (imagem.url)} )">
+                    <img src="@(imagem.url)" alt="Imagem" class="imagem" />
                 </a>
             </li>          
         }

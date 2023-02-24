@@ -2,7 +2,7 @@
 {
     public class Image
     {
-        public string b64_json { get; set; }
+        public string url { get; set; }
 
         public long created { get; set; }
     }
