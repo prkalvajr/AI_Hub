@@ -54,6 +54,7 @@ namespace API.OpenAI
             // {
             //     imageData = webClient.down.DownloadData(imageUrl);
             // }
+            model.image = imageUrl;
 
             var request = new HttpRequestMessage
             {

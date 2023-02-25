@@ -27,10 +27,16 @@ namespace API.OpenAI
             return response;
         }
 
-        public string GenerateVariation(string image)
+        public string GenerateImage(ImageAPIModel model)
+        {
+            var response = client.Post(baseUrl + "/generations", model);
+            return response;
+        }
+
+        public string GenerateVariation(string imageUrl)
         {
             var response = client.Post(baseUrl + "/variations", 
-                new VariationModel { n = 6, size = "512x512", response_format = "url" }, image);
+                new VariationModel { n = 6, size = "512x512", response_format = "url" }, imageUrl);
             return response;
         }
 
