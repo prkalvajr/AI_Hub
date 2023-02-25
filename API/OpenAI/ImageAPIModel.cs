@@ -9,4 +9,9 @@
         public string response_format { get; set; }
         // public string user { get; set; }
     }
+
+    public class VariationModel : ImageAPIModel    
+    {
+        public string image { get; set; }
+    }
 }

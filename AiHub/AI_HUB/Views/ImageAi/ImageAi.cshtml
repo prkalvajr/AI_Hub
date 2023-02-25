@@ -33,25 +33,6 @@
 
 </style>
 
-<script type="text/javascript">
-
-    function Download(b64, id) {
-        var link = document.createElement("a");
-        var bytes = atob(b64);
-        var imageBytes = new Array(bytes.length);
-
-        for (var i = 0; i < bytes.length; i++) {
-            imageBytes[i] = bytes.charCodeAt(i);
-        }
-
-        var blob = new Blob([new Uint8Array(imageBytes)], { type: "image/jpeg" });
-        link.download = "imagem_" + id + ".jpg";
-        link.href = URL.createObjectURL(blob);
-        link.click();
-    }
-
-</script>
-
 <form asp-action="GerarImagem" asp-controller="ImageAi" method="post">
     <input type="text" name="inputPrompt" id="inputPrompt" />
     <button type="submit" class="btn btn-primary">Gerar Imagem</button>
@@ -65,7 +46,7 @@
         @foreach (var imagem in Model)
         {
             <li>
-                <a href="@Url.Action("Variation", "ImageAi", new { imagem = (imagem.url)} )">
+                <a href="@Url.Action("Variation", "ImageAi", new { url = (imagem.url)} )">
                     <img src="@(imagem.url)" alt="Imagem" class="imagem" />
                 </a>
             </li>          

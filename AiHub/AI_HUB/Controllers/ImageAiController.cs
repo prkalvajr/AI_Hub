@@ -8,10 +8,12 @@ namespace AI_HUB.Controllers
     public class ImageAiController : Controller
     {
         private readonly IConfiguration _config;
+        API.OpenAI.ImageAPI objApi;
 
         public ImageAiController(IConfiguration config)
         {
             _config = config;
+            objApi = new API.OpenAI.ImageAPI(config);
         }
 
         public IActionResult ImageAi()
@@ -27,7 +29,6 @@ namespace AI_HUB.Controllers
             }
             else
             {
-                var objApi = new API.OpenAI.ImageAPI(_config);
                 string jsonRetorno = objApi.GenerateImages(inputPrompt);
                 var lstImagens = new List<Models.ImageAi.Image>();
 
@@ -44,9 +45,10 @@ namespace AI_HUB.Controllers
             }
         }
 
-        public IActionResult Variation(string imagem)
+        public IActionResult Variation(string url)
         {
-            ViewBag.Imagem = imagem;
+            var jsonRetorno = objApi.GenerateVariation(url);
+            ViewBag.Imagem = url;
             return View("Variation");
         }
     }

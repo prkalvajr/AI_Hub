@@ -2,4 +2,27 @@
     ViewData["Title"] = "Variation";
 }
 
+<script type="text/javascript">
+
+    function Download(url) {
+        var link = document.createElement("a");
+        var bytes = atob(url);
+        var imageBytes = new Array(bytes.length);
+
+        for (var i = 0; i < bytes.length; i++) {
+            imageBytes[i] = bytes.charCodeAt(i);
+        }
+
+        var blob = new Blob([new Uint8Array(imageBytes)], { type: "image/jpeg" });
+        link.download = "imageIA.jpg";
+        link.href = URL.createObjectURL(blob);
+        link.click();
+    }
+
+</script>
+
 <img src="@ViewBag.Imagem" alt="Imagem" />
+
+<a href="#" onclick="Download('@(ViewBag.ImageUrl)')">
+    <img src="~/icons/cloud-arrow-down.svg" alt="Download" title="Download" />
+</a>

@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using System.Net;
 
 namespace API.OpenAI
 {
@@ -38,7 +39,27 @@ namespace API.OpenAI
             {
                 Method = HttpMethod.Post,
                 RequestUri = new Uri(url),
-                Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, MediaTypeNames.Application.Json /* or "application/json" in older versions */),
+                Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, MediaTypeNames.Application.Json),
+            };
+
+            var response = client.SendAsync(request).Result;
+            response.EnsureSuccessStatusCode();
+            return response.Content.ReadAsStringAsync().Result;
+        }
+
+        public string Post(string url, VariationModel model, string imageUrl)
+        {
+            // byte[] imageData;
+            // using (HttpClient webClient = new HttpClient())
+            // {
+            //     imageData = webClient.down.DownloadData(imageUrl);
+            // }
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri(url),
+                Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, MediaTypeNames.Application.Json),
             };
 
             var response = client.SendAsync(request).Result;
