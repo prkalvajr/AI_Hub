@@ -7,6 +7,8 @@ using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using System.Net;
+using System.IO;
+using System.Collections.Generic;
 
 namespace API.OpenAI
 {
@@ -49,21 +51,15 @@ namespace API.OpenAI
 
         public string Post(string url, VariationModel model, string imageUrl)
         {
-            // byte[] imageData;
-            // using (HttpClient webClient = new HttpClient())
-            // {
-            //     imageData = webClient.down.DownloadData(imageUrl);
-            // }
-            model.image = imageUrl;
+            HttpResponseMessage imageResponse = new HttpClient().GetAsync(imageUrl).Result;
+            Stream imageStream = imageResponse.Content.ReadAsStreamAsync().Result;
+            MultipartFormDataContent form = new MultipartFormDataContent();
+             
+            form.Add(new StreamContent(imageStream), "image", "@otter.png");
+            form.Add(new StringContent(model.n.ToString()), "n");
+            form.Add(new StringContent(model.size), "size");
 
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri(url),
-                Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, MediaTypeNames.Application.Json),
-            };
-
-            var response = client.SendAsync(request).Result;
+            HttpResponseMessage response = client.PostAsync(url, form).Result;
             response.EnsureSuccessStatusCode();
             return response.Content.ReadAsStringAsync().Result;
         }

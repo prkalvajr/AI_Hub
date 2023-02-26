@@ -1,4 +1,6 @@
-﻿namespace API.OpenAI
+﻿using System.Text.Json.Serialization;
+
+namespace API.OpenAI
 {
     // https://platform.openai.com/docs/api-reference/images/create
     public class ImageAPIModel
@@ -10,8 +12,10 @@
         // public string user { get; set; }
     }
 
-    public class VariationModel : ImageAPIModel    
+    public class VariationModel
     {
-        public string image { get; set; }
+        public int n { get; set; }
+        public string size { get; set; }
+        public string response_format { get; set; }
     }
 }
