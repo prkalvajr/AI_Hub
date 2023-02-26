@@ -49,7 +49,7 @@ namespace API.OpenAI
             return response.Content.ReadAsStringAsync().Result;
         }
 
-        public string Post(string url, VariationModel model, string imageUrl)
+        public string Post(string url, ImageAPIModel model, string imageUrl)
         {
             HttpResponseMessage imageResponse = new HttpClient().GetAsync(imageUrl).Result;
             Stream imageStream = imageResponse.Content.ReadAsStreamAsync().Result;

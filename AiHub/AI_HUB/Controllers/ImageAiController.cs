@@ -49,7 +49,14 @@ namespace AI_HUB.Controllers
         {
             var jsonRetorno = objApi.GenerateVariation(url);
             ViewBag.Imagem = url;
-            return View("Variation");
+
+            var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonRetorno);
+            var lstVariacao = new List<Models.ImageAi.Image>();
+
+            foreach (var item in jsonObject.data)
+                lstVariacao.Add(new Models.ImageAi.Image() { url = item.url.ToString() });   
+
+            return View("Variation", lstVariacao);
         }
     }
 }

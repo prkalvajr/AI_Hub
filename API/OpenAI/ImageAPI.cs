@@ -36,7 +36,7 @@ namespace API.OpenAI
         public string GenerateVariation(string imageUrl)
         {
             var response = client.Post(baseUrl + "/variations", 
-                new VariationModel { n = 6, size = "512x512", response_format = "url" }, imageUrl);
+                new ImageAPIModel { n = 6, size = "512x512", response_format = "url" }, imageUrl);
             return response;
         }
 

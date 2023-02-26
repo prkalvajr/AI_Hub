@@ -11,11 +11,4 @@ namespace API.OpenAI
         public string response_format { get; set; }
         // public string user { get; set; }
     }
-
-    public class VariationModel
-    {
-        public int n { get; set; }
-        public string size { get; set; }
-        public string response_format { get; set; }
-    }
 }
