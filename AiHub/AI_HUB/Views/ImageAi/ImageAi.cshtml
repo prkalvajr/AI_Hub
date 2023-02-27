@@ -11,7 +11,7 @@
 
         .imagem:hover {
             border-color: #f98;
-            transform: scale(1.1);  /* Aumenta com hover*/
+            transform: scale(1.1); /* Aumenta com hover*/
         }
 
     .lista-imagens {
@@ -49,7 +49,7 @@
                 <a href="@Url.Action("Variation", "ImageAi", new { url = (imagem.url)} )">
                     <img src="@(imagem.url)" alt="Imagem" class="imagem" />
                 </a>
-            </li>          
+            </li>
         }
     </ul>
 }

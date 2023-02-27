@@ -9,63 +9,84 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
-    $(document).ready(function () {
-        var imageUrl = '@ViewBag.Imagem';
+    
+    $(document).ready(function() {
+        debugger;
+        $('#btnSubmit').click(function () {
+            $('#form').submit();
+        });
+    });
+
+    //$(document).ready(function () {
+    //    var encodedUrl = encodeURIComponent($('#primary').prop('src'));
+    //    $('#btnSubmit').click(function () {
+    //        $('#form').submit();
+    //    });
+    //});
+        /*
         $.ajax({
-            url: '@Url.Action("GerarVariacao", "ImageAi")',
+            url: 'Url.Action("GerarVariacao", "ImageAi")',
             type: 'POST',
             dataType: 'json',
-            data: { url: imageUrl },
-            success: function (result) {
+            data: { url: encodedUrl },
+            /*success: function (result) {
                 document.getElementById("loading-spinner").style.display = "none";
             },
             error: function () {
-                alert("Falha na geração de variações");
+                //alert("Falha na geração de variações");
                 document.getElementById("loading-spinner").style.display = "none";
                 // Trate o erro, se houver
-            }
+            } 
         });
-    })
+
+        })*/
 
     /*
-        function Download(url) {
-            var link = document.createElement("a");
-            var bytes = atob(url);
-            var imageBytes = new Array(bytes.length);
-
-            for (var i = 0; i < bytes.length; i++) {
-                imageBytes[i] = bytes.charCodeAt(i);
-            }
-
-            var blob = new Blob([new Uint8Array(imageBytes)], { type: "image/jpeg" });
-            link.download = "imageIA.jpg";
-            link.href = URL.createObjectURL(blob);
-            link.click();
-        } */
+    function Download(url) {
+        var link = document.createElement("a");
+        var bytes = atob(url);
+        var imageBytes = new Array(bytes.length);
+    
+        for (var i = 0; i < bytes.length; i++) {
+            imageBytes[i] = bytes.charCodeAt(i);
+        }
+    
+        var blob = new Blob([new Uint8Array(imageBytes)], { type: "image/jpeg" });
+        link.download = "imageIA.jpg";
+        link.href = URL.createObjectURL(blob);
+        link.click();
+    } */
 
 </script>
 
-<img src="@ViewBag.Imagem" alt="Imagem" />
+<img src="@ViewBag.Imagem" alt="Imagem" id="primary" />
 
-<a href="#" onclick="Download('@(ViewBag.ImageUrl)')">
+<a href="#" onclick="Download('@(ViewBag.Imagem)')">
     <img src="~/icons/cloud-arrow-down.svg" alt="Download" title="Download" />
 </a>
 
 @model List<AI_HUB.Models.ImageAi.Image>
 @if (Model.Count == 0)
 {
-    <div id="loading-spinner" style="display:block;">
+    <div id="loading-spinner" style="display:inline-block;">
         <img src="~/icons/spinner_loader.gif" alt="variation" class="variation" />
     </div>
+
+    <form asp-action="GerarVariacao" asp-controller="ImageAi" method="post" id="form" style="display:block">
+        <input type="text" name="url" id="url" value="@ViewBag.Imagem" />
+        <button type="submit" id="btnSubmit" class="btn btn-primary">Gerar Variacao</button>
+    </form>
 }
 else
 {
-    <ul class="lista-imagens">
-        @foreach (var variation in Model)
-        {
-            <li>
-                <img src="@(variation.url)" alt="Imagem" class="imagem" />
-            </li>
-        }
-    </ul>
+    <div id="idlstVariacao" style="display:inline-block;">
+        <ul class="lista-imagens" >
+            @foreach (var variation in Model)
+                {
+                    <li>
+                        <img src="@(variation.url)" alt="Variacao" class="variation" />
+                    </li>
+                }
+        </ul>
+    </div>
 }

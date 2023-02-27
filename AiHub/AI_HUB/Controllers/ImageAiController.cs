@@ -54,7 +54,8 @@ namespace AI_HUB.Controllers
         }
 
         public IActionResult GerarVariacao(string url)
-        {
+        {   
+            string decodedUrl = Uri.UnescapeDataString(url);
             var jsonRetorno = objApi.GenerateVariation(url);
 
             var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonRetorno);
