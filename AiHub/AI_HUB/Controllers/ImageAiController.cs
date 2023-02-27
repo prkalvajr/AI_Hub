@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.OpenAI;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -37,9 +38,9 @@ namespace AI_HUB.Controllers
                 var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonRetorno);
                 JObject json = JObject.Parse(jsonRetorno);
 
-                foreach (var item in jsonObject.data) 
-                { 
-                    lstImagens.Add( new Models.ImageAi.Image() { url = item.url.ToString(), created = (long)json["created"] });
+                foreach (var item in jsonObject.data)
+                {
+                    lstImagens.Add(new Models.ImageAi.Image() { url = item.url.ToString(), created = (long)json["created"] });
                 }
 
                 ViewBag.ImagesId = json["created"].ToString();
@@ -48,13 +49,13 @@ namespace AI_HUB.Controllers
         }
 
         public IActionResult Variation(string url)
-        { 
+        {
             ViewBag.Imagem = url;
             return View("Variation", new List<Models.ImageAi.Image>());
         }
 
         public IActionResult GerarVariacao(string url)
-        {   
+        {
             string decodedUrl = Uri.UnescapeDataString(url);
             var jsonRetorno = objApi.GenerateVariation(url);
 
@@ -66,6 +67,11 @@ namespace AI_HUB.Controllers
 
             return View("Variation", lstVariacao);
         }
+
+        public IActionResult Download(string url)
+        {
+            byte[] byteArray = new HttpClient().GetByteArrayAsync(url).Result;
+            return File(byteArray, "image/jpeg", "image.jpg");
+        }
     }
 }
-    

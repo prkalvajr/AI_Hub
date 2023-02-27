@@ -9,8 +9,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
-    
-    $(document).ready(function() {
+
+    $(document).ready(function () {
         debugger;
         $('#btnSubmit').click(function () {
             $('#form').submit();
@@ -23,47 +23,27 @@
     //        $('#form').submit();
     //    });
     //});
-        /*
-        $.ajax({
-            url: 'Url.Action("GerarVariacao", "ImageAi")',
-            type: 'POST',
-            dataType: 'json',
-            data: { url: encodedUrl },
-            /*success: function (result) {
-                document.getElementById("loading-spinner").style.display = "none";
-            },
-            error: function () {
-                //alert("Falha na geração de variações");
-                document.getElementById("loading-spinner").style.display = "none";
-                // Trate o erro, se houver
-            } 
-        });
-
-        })*/
-
     /*
-    function Download(url) {
-        var link = document.createElement("a");
-        var bytes = atob(url);
-        var imageBytes = new Array(bytes.length);
-    
-        for (var i = 0; i < bytes.length; i++) {
-            imageBytes[i] = bytes.charCodeAt(i);
+    $.ajax({
+        url: 'Url.Action("GerarVariacao", "ImageAi")',
+        type: 'POST',
+        dataType: 'json',
+        data: { url: encodedUrl },
+        /*success: function (result) {
+            document.getElementById("loading-spinner").style.display = "none";
+        },
+        error: function () {
+            //alert("Falha na geração de variações");
+            document.getElementById("loading-spinner").style.display = "none";
+            // Trate o erro, se houver
         }
-    
-        var blob = new Blob([new Uint8Array(imageBytes)], { type: "image/jpeg" });
-        link.download = "imageIA.jpg";
-        link.href = URL.createObjectURL(blob);
-        link.click();
-    } */
+    });
+
+    })*/
 
 </script>
 
 <img src="@ViewBag.Imagem" alt="Imagem" id="primary" />
-
-<a href="#" onclick="Download('@(ViewBag.Imagem)')">
-    <img src="~/icons/cloud-arrow-down.svg" alt="Download" title="Download" />
-</a>
 
 @model List<AI_HUB.Models.ImageAi.Image>
 @if (Model.Count == 0)
@@ -80,13 +60,15 @@
 else
 {
     <div id="idlstVariacao" style="display:inline-block;">
-        <ul class="lista-imagens" >
+        <ul class="lista-imagens">
             @foreach (var variation in Model)
-                {
-                    <li>
+            {
+                <li>
+                    <a href="@Url.Action("Download", "ImageAi", new { url = variation.url })">
                         <img src="@(variation.url)" alt="Variacao" class="variation" />
-                    </li>
-                }
+                    </a>
+                </li>
+            }
         </ul>
     </div>
 }
