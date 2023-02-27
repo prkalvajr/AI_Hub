@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Diagnostics.Eventing.Reader;
+using System.Security.Policy;
 
 namespace AI_HUB.Controllers
 {
@@ -46,15 +48,20 @@ namespace AI_HUB.Controllers
         }
 
         public IActionResult Variation(string url)
+        { 
+            ViewBag.Imagem = url;
+            return View("Variation", new List<Models.ImageAi.Image>());
+        }
+
+        public IActionResult GerarVariacao(string url)
         {
             var jsonRetorno = objApi.GenerateVariation(url);
-            ViewBag.Imagem = url;
 
             var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonRetorno);
             var lstVariacao = new List<Models.ImageAi.Image>();
 
             foreach (var item in jsonObject.data)
-                lstVariacao.Add(new Models.ImageAi.Image() { url = item.url.ToString() });   
+                lstVariacao.Add(new Models.ImageAi.Image() { url = item.url.ToString() });
 
             return View("Variation", lstVariacao);
         }

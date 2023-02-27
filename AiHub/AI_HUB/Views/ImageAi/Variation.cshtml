@@ -1,23 +1,47 @@
 ﻿@{
     ViewData["Title"] = "Variation";
 }
+<style type="text/css">
 
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
-    function Download(url) {
-        var link = document.createElement("a");
-        var bytes = atob(url);
-        var imageBytes = new Array(bytes.length);
+    $(document).ready(function () {
+        var imageUrl = '@ViewBag.Imagem';
+        $.ajax({
+            url: '@Url.Action("GerarVariacao", "ImageAi")',
+            type: 'POST',
+            dataType: 'json',
+            data: { url: imageUrl },
+            success: function (result) {
+                document.getElementById("loading-spinner").style.display = "none";
+            },
+            error: function () {
+                alert("Falha na geração de variações");
+                document.getElementById("loading-spinner").style.display = "none";
+                // Trate o erro, se houver
+            }
+        });
+    })
 
-        for (var i = 0; i < bytes.length; i++) {
-            imageBytes[i] = bytes.charCodeAt(i);
-        }
+    /*
+        function Download(url) {
+            var link = document.createElement("a");
+            var bytes = atob(url);
+            var imageBytes = new Array(bytes.length);
 
-        var blob = new Blob([new Uint8Array(imageBytes)], { type: "image/jpeg" });
-        link.download = "imageIA.jpg";
-        link.href = URL.createObjectURL(blob);
-        link.click();
-    }
+            for (var i = 0; i < bytes.length; i++) {
+                imageBytes[i] = bytes.charCodeAt(i);
+            }
+
+            var blob = new Blob([new Uint8Array(imageBytes)], { type: "image/jpeg" });
+            link.download = "imageIA.jpg";
+            link.href = URL.createObjectURL(blob);
+            link.click();
+        } */
 
 </script>
 
@@ -28,14 +52,20 @@
 </a>
 
 @model List<AI_HUB.Models.ImageAi.Image>
-@if (Model.Count > 0)
+@if (Model.Count == 0)
+{
+    <div id="loading-spinner" style="display:block;">
+        <img src="~/icons/spinner_loader.gif" alt="variation" class="variation" />
+    </div>
+}
+else
 {
     <ul class="lista-imagens">
-    @foreach (var variation in Model)
-    {
-        <li>
-            <img src="@(variation.url)" alt="Imagem" class="imagem" />
-        </li> 
-    }
+        @foreach (var variation in Model)
+        {
+            <li>
+                <img src="@(variation.url)" alt="Imagem" class="imagem" />
+            </li>
+        }
     </ul>
 }
