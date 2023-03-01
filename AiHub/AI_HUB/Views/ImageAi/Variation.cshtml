@@ -2,27 +2,53 @@
     ViewData["Title"] = "Variation";
 }
 <style type="text/css">
+.container {
+  display: flex;
+  justify-content: space-between;
+}
 
+.imagem-maior {
+  width: 50%;
+}
 
-</style>
+.imagem-maior img {
+  width: 100%;
+  height: auto;
+}
+
+.imagens-menores {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.imagens-menores a {
+  width: calc(33.33% - 10px);
+  margin-bottom: 10px;
+}
+
+.imagens-menores a img {
+  width: 100%;
+  height: auto;
+}</style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
 
     $(document).ready(function () {
-        debugger;
-        $('#btnSubmit').click(function () {
-            $('#form').submit();
-        });
+        // $('#btnSubmit').click(function () {
+        //     $('#form').submit();
+        // });
     });
 
-    //$(document).ready(function () {
-    //    var encodedUrl = encodeURIComponent($('#primary').prop('src'));
-    //    $('#btnSubmit').click(function () {
-    //        $('#form').submit();
-    //    });
-    //});
+        //$(document).ready(function () {
+        //    var encodedUrl = encodeURIComponent($('#primary').prop('src'));
+        //    $('#btnSubmit').click(function () {
+        //        $('#form').submit();
+        //    });
+        //});
     /*
     $.ajax({
         url: 'Url.Action("GerarVariacao", "ImageAi")',
@@ -43,32 +69,34 @@
 
 </script>
 
-<img src="@ViewBag.Imagem" alt="Imagem" id="primary" />
-
-@model List<AI_HUB.Models.ImageAi.Image>
-@if (Model.Count == 0)
-{
-    <div id="loading-spinner" style="display:inline-block;">
-        <img src="~/icons/spinner_loader.gif" alt="variation" class="variation" />
+<div class="container">
+    <div class="imagem-maior">
+        <a href="@Url.Action("Download", "ImageAi", new { url = ViewBag.Imagem })">
+            <img id="imagem-principal" src="@ViewBag.Imagem" alt="Imagem"/>
+        </a>
     </div>
 
-    <form asp-action="GerarVariacao" asp-controller="ImageAi" method="post" id="form" style="display:block">
-        <input type="text" name="url" id="url" value="@ViewBag.Imagem" />
-        <button type="submit" id="btnSubmit" class="btn btn-primary">Gerar Variacao</button>
-    </form>
-}
-else
-{
-    <div id="idlstVariacao" style="display:inline-block;">
-        <ul class="lista-imagens">
-            @foreach (var variation in Model)
-            {
-                <li>
-                    <a href="@Url.Action("Download", "ImageAi", new { url = variation.url })">
-                        <img src="@(variation.url)" alt="Variacao" class="variation" />
-                    </a>
-                </li>
-            }
-        </ul>
-    </div>
-}
+    @model List<AI_HUB.Models.ImageAi.Image>
+    @if (Model.Count == 0)
+    {
+        <div id="loading-spinner" style="display:inline-block;">
+            <img src="~/icons/spinner_loader.gif" alt="variation" class="variation" />
+        </div>
+
+        <form asp-action="GerarVariacao" asp-controller="ImageAi" method="post" id="form" style="display:block">
+            <input type="text" name="url" id="url" value="@ViewBag.Imagem" />
+            <button type="submit" id="btnSubmit" class="btn btn-primary">Gerar Variacao</button>
+        </form>
+    }
+    else
+    {
+        <div class="imagens-menores">
+        @foreach (var variation in Model)
+        {         
+                <a href="@Url.Action("Download", "ImageAi", new { url = variation.url })">
+                    <img src="@(variation.url)" alt="Variacao" class="imagem-menor" />
+                </a>            
+        }
+        </div>
+    }
+</div>

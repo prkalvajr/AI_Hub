@@ -56,6 +56,7 @@ namespace AI_HUB.Controllers
 
         public IActionResult GerarVariacao(string url)
         {
+            ViewBag.Imagem = url;
             string decodedUrl = Uri.UnescapeDataString(url);
             var jsonRetorno = objApi.GenerateVariation(url);
 
