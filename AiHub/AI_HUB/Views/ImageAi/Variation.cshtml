@@ -38,60 +38,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
-
-    //$(document).ready(function () {
-    //    var encodedUrl = encodeURIComponent($('#imagem-principal').prop('src'));
-    //    $.ajax({
-    //        url: 'Url.Action("GerarVariacao", "ImageAi")',
-    //        dataType: 'json',
-    //        data: { url: encodedUrl },
-    //    });
-    //})
-
     window.onload = function () {
         var encodedUrl = encodeURIComponent($('#imagem-principal').prop('src'));
         window.location.href = '/ImageAi/GerarVariacao?url=' + encodedUrl;
     }
-
-            /*success: function (result) {
-        document.getElementById("loading-spinner").style.display = "none";
-    },
-    error: function () {
-        //alert("Falha na geração de variações");
-        document.getElementById("loading-spinner").style.display = "none";
-        // Trate o erro, se houver
-    }
-    });
-
-        // $('#btnSubmit').click(function () {
-        //     $('#form').submit();
-        // });
-    });
-
-            //$(document).ready(function () {
-            //    var encodedUrl = encodeURIComponent($('#primary').prop('src'));
-            //    $('#btnSubmit').click(function () {
-            //        $('#form').submit();
-            //    });
-            //});
-    /*
-    $.ajax({
-        url: 'Url.Action("GerarVariacao", "ImageAi")',
-        type: 'POST',
-        dataType: 'json',
-        data: { url: encodedUrl },
-        /*success: function (result) {
-            document.getElementById("loading-spinner").style.display = "none";
-        },
-        error: function () {
-            //alert("Falha na geração de variações");
-            document.getElementById("loading-spinner").style.display = "none";
-            // Trate o erro, se houver
-        }
-    });
-
-    })*/
-
 </script>
 
 <div class="container">
