@@ -2,53 +2,78 @@
     ViewData["Title"] = "Variation";
 }
 <style type="text/css">
-.container {
-  display: flex;
-  justify-content: space-between;
-}
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
 
-.imagem-maior {
-  width: 50%;
-}
+    .imagem-maior {
+        width: 50%;       
+    }
 
-.imagem-maior img {
-  width: 100%;
-  height: auto;
-}
+        .imagem-maior img {
+            width: 100%;
+            height: auto;
+            padding-right: 20px;
+        }
 
-.imagens-menores {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 50%;
-}
+    .imagens-menores {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 50%;
+        align-content: center;
+    }
 
-.imagens-menores a {
-  width: calc(33.33% - 10px);
-  margin-bottom: 10px;
-}
+        .imagens-menores a {
+            width: calc(33.33% - 10px);
+            margin-bottom: 10px;
+        }
 
-.imagens-menores a img {
-  width: 100%;
-  height: auto;
-}</style>
+            .imagens-menores a img {
+                width: 100%;
+                height: auto;
+            }</style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
 
-    $(document).ready(function () {
+    //$(document).ready(function () {
+    //    var encodedUrl = encodeURIComponent($('#imagem-principal').prop('src'));
+    //    $.ajax({
+    //        url: 'Url.Action("GerarVariacao", "ImageAi")',
+    //        dataType: 'json',
+    //        data: { url: encodedUrl },
+    //    });
+    //})
+
+    window.onload = function () {
+        var encodedUrl = encodeURIComponent($('#imagem-principal').prop('src'));
+        window.location.href = '/ImageAi/GerarVariacao?url=' + encodedUrl;
+    }
+
+            /*success: function (result) {
+        document.getElementById("loading-spinner").style.display = "none";
+    },
+    error: function () {
+        //alert("Falha na geração de variações");
+        document.getElementById("loading-spinner").style.display = "none";
+        // Trate o erro, se houver
+    }
+    });
+
         // $('#btnSubmit').click(function () {
         //     $('#form').submit();
         // });
     });
 
-        //$(document).ready(function () {
-        //    var encodedUrl = encodeURIComponent($('#primary').prop('src'));
-        //    $('#btnSubmit').click(function () {
-        //        $('#form').submit();
-        //    });
-        //});
+            //$(document).ready(function () {
+            //    var encodedUrl = encodeURIComponent($('#primary').prop('src'));
+            //    $('#btnSubmit').click(function () {
+            //        $('#form').submit();
+            //    });
+            //});
     /*
     $.ajax({
         url: 'Url.Action("GerarVariacao", "ImageAi")',
@@ -72,7 +97,7 @@
 <div class="container">
     <div class="imagem-maior">
         <a href="@Url.Action("Download", "ImageAi", new { url = ViewBag.Imagem })">
-            <img id="imagem-principal" src="@ViewBag.Imagem" alt="Imagem"/>
+            <img id="imagem-principal" src="@ViewBag.Imagem" alt="Imagem" />
         </a>
     </div>
 
@@ -91,12 +116,12 @@
     else
     {
         <div class="imagens-menores">
-        @foreach (var variation in Model)
-        {         
+            @foreach (var variation in Model)
+            {
                 <a href="@Url.Action("Download", "ImageAi", new { url = variation.url })">
                     <img src="@(variation.url)" alt="Variacao" class="imagem-menor" />
-                </a>            
-        }
+                </a>
+            }
         </div>
     }
 </div>

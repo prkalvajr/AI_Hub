@@ -55,10 +55,10 @@ namespace AI_HUB.Controllers
         }
 
         public IActionResult GerarVariacao(string url)
-        {
-            ViewBag.Imagem = url;
+        {        
             string decodedUrl = Uri.UnescapeDataString(url);
-            var jsonRetorno = objApi.GenerateVariation(url);
+            ViewBag.Imagem = decodedUrl;
+            var jsonRetorno = objApi.GenerateVariation(decodedUrl);
 
             var jsonObject = JsonConvert.DeserializeObject<dynamic>(jsonRetorno);
             var lstVariacao = new List<Models.ImageAi.Image>();
