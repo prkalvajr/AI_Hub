@@ -6,6 +6,7 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 var openAiKey = builder.Configuration["openAiApiKey"];
+var writeSonicKey = builder.Configuration["writesonicKey"];
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -31,16 +32,5 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "ImageAi",
     pattern: "{controller=ImageAi}/{action=ImageAi}/{id?}");
-
-/*
- app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "ImageAi",
-        pattern: "ImageAiController/ImageAi",
-        defaults: new { controller = "ImageAiController", action = "ImageAi" }
-    );
-});
- */
 
 app.Run();
