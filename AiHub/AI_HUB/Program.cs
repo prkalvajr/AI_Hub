@@ -20,6 +20,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.MapGet("/", () => openAiKey);
+app.MapGet("/", () => writeSonicKey);
 
 app.UseRouting();
 

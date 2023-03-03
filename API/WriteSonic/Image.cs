@@ -15,8 +15,7 @@ namespace API.WriteSonic
 
         public string GenerateImages(string prompt)
         {
-            // var response = 
-            // return response
+            return client.Post(baseUrl, new RequestModel() { prompt = prompt, image_height = 512, image_width = 512, num_images = 6 });
         }
     }
 }
