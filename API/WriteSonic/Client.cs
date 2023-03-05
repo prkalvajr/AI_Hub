@@ -19,35 +19,21 @@ namespace API.WriteSonic
         {
             _config = config;
             client.BaseAddress = new Uri(baseUrl);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["writeSonicKey"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("X-API-KEY", _config["writeSonicKey"]);
         }
 
         public string Post(string url, RequestModel model)
         {
-            
-            // var restClient = new RestClient(url);
-            // restClient.AddDefaultHeader("Accept", "application/json");
-            // restClient.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["writesonicKey"]);
-            // var request = new RestRequest(url, Method.Post);
-            // request.AddHeader("accept", "application/json");
-            // request.AddHeader("content-type", "application/json");
-            // request.AddParameter("application/json", JsonSerializer.Serialize(model), ParameterType.RequestBody);
-            // RestResponse response = restClient.Execute(request);
 
+            var client = new RestClient("https://api.writesonic.com/v1/business/photosonic/generate-image");
+            var request = new RestRequest(url, Method.Post);
+            request.AddHeader("accept", "application/json");
+            request.AddHeader("content-type", "application/json");
+            request.AddHeader("X-API-KEY", "bb447162-7360-454f-abd8-5295295fb57d");
+            request.AddParameter("application/json", "{\"num_images\":2,\"image_width\":512,\"image_height\":512,\"prompt\":\"Test\"}", ParameterType.RequestBody);
+            RestResponse response = client.Execute(request);
 
-
-             var request = new HttpRequestMessage
-             {
-                 Method = HttpMethod.Post,
-                 RequestUri = new Uri(url),
-                 Content = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, MediaTypeNames.Application.Json),
-             };
-            
-             var response = client.SendAsync(request).Result;
-             response.EnsureSuccessStatusCode();
-            return response.Content.ReadAsStringAsync().Result;
+            return response.Content;
         }
-
-
     }
 }

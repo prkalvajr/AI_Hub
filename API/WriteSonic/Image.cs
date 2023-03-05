@@ -4,7 +4,7 @@ namespace API.WriteSonic
 {
     public class Image
     {
-        const string baseUrl = "https://api.writesonic.com/v1/business/photosonic/generate-image";
+        const string baseUrl = "https://api.writesonic.com/v2/business/photosonic/generate-image";
 
         Client client;
 

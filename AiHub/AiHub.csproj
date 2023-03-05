@@ -8,4 +8,8 @@
     <UserSecretsId>c103906d-5648-45d1-911e-c12382fa035d</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="108.0.3" />
+  </ItemGroup>
+
 </Project>
